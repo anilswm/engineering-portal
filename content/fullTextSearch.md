@@ -7,11 +7,11 @@ Description: In this blog, we will learn how we can full-text search in MongoDB 
 tags: ["MongoDB"]
 ---
 
-Full text search is very important feature when we talk about the finding content on internet. A google search is the best example for this when we find the content using the phrases or keywords. In this article we will learn about full-text search capebilities based on text index.
+Full text search is a very important feature when we talk about finding content on the internet. A google search is the best example for this when we find the content using the phrases or keywords. In this article we will learn about full-text search capabilities based on text index.
 
 ## Create a Sample Database
 
-Before the start, we will create a sample Database that we will use for all examples in this tutorials.
+Before the start, we will create a sample Database that we will use for all examples in this tutorial.
 
 We will create a database with name _myDB_ and will create a collection with name _books_. For this, the statement would be as follows.
 
@@ -66,17 +66,18 @@ Let's insert some documents by using the following statement.
 
 ## Creating a Text Index
 
-We need to create a text index on the fields to perform the text search. Text index can be created on single or multiple fields. The following statement will create a text index on single field.
+We need to create a text index on the fields to perform the text search. Text index can be created on single or multiple fields. The following statement will create a text index on a single field.
+
 ```
 >db.books.createIndex({"description":"text"})
 ```
-For this tutorial we will create text index on _description_ and _subtitle_ fields. We can create only one text index per collection in MongoDB. So We will create a compound text index using the following statement.
+For this tutorial we will create a text index on _description_ and _subtitle_ fields. We can create only one text index per collection in MongoDB. So We will create a compound text index using the following statement.
 ```
 >db.books.createIndex({"subtitle":"text","description":"text"})
 ```
 
 ### $search
-Now we will try to search documents that have the keywords 'ECMAScript' in _description_ and _subtitle_ fields. For this we can use below statement.
+Now we will try to search documents that have the keywords 'ECMAScript' in _description_ and _subtitle_ fields. For this we can use the below statement.
 
 ```
 db.books.find({$text: {$search: "ECMAScript"}})
@@ -93,7 +94,7 @@ db.books.find({$text: {$search: "ECMAScript"}})
 ```
 #### Phrases
 
-You can search for phrases using the text index. By deafult text serach perform a OR search for all words in the phrase. If you want to serach 'modern design patterns' then it will search for documents that have the keywords either modern, design or patterns.
+You can search for phrases using the text index. By default text search performs an OR search for all words in the phrase. If you want to search 'modern design patterns' then it will search for documents that have the keywords either modern, design or patterns.
 
 **Example**
 ```
@@ -115,7 +116,7 @@ You can search for phrases using the text index. By deafult text serach perform 
 	}
 >
 ```
-If you want to search for exact phrase like documents that have 'modern design patterns' together, you can do so by specifying double quotes in the search text.
+If you want to search for exact phrases like documents that have 'modern design patterns' together, you can do so by specifying double quotes in the search text.
  
 **Example**
 ```
@@ -128,7 +129,7 @@ If you want to search for exact phrase like documents that have 'modern design p
 
 ```
 #### Negations
-If you want to exclude the documents that contains a perticualar word than you can use negation serach. For example if you want to search all documents that have the 'JavaScript' but not 'HTML5' or 'ECMAScript', you can do search like below example.
+If you want to exclude the documents that contain a particular word then you can use negation search. For example if you want to search all documents that have the 'JavaScript' but not 'HTML5' or 'ECMAScript', you can do search like below example.
 
 **Example**
 ```
@@ -152,7 +153,8 @@ If you want to exclude the documents that contains a perticualar word than you c
 ```
 
 #### Text Search Score
-The text search provides a score to each document that represents the relevancy of the document with the search query. This score can be used to sort the all documents returned in the serach result. A higher text score will indicate a most relevent match. 
+The text search provides a score to each document that represents the relevancy of the document with the search query. This score can be used to sort the all documents returned in the search result. A higher score will indicate a most relevant match.
+ 
 **Example**
 ```
 >db.books.find({$text: {$search: "JavaScript "}},{score: {$meta: "textScore"}, subtitle: 1, description: 1 }).sort({score:{$meta:"textScore"}})
