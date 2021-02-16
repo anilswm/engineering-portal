@@ -190,3 +190,7 @@ The text search provides a score to each document that represents the relevancy 
 	}
 
 ```
+
+## Conclusion
+
+I hope you learned something new today, If you want to learn few more stuff on MongoDB, here is an interesting article on [Self-Hosted MongoDB](https://www.loginradius.com/blog/async/self-hosted-mongo/) I also invite you to try stuff on your own and share your experience in the comment section. Furthermore, if you face any problems with any of the above definitions, please feel free to ask me in the comments below.
