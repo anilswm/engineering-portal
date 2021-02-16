@@ -114,7 +114,7 @@ db.books.find({$text: {$search: "ECMAScript"}})
 ```
 #### Phrases
 
-We can search for phrases using the text index. By deafult text serach perform a OR search for all words in the phrase. If we want to serach 'modern design patterns' then it will search for documents that have the keywords either modern, design or patterns.
+You can search for phrases using the text index. By deafult text serach perform a OR search for all words in the phrase. If you want to serach 'modern design patterns' then it will search for documents that have the keywords either modern, design or patterns.
 
 **Example**
 ```
@@ -136,7 +136,7 @@ We can search for phrases using the text index. By deafult text serach perform a
 	}
 >
 ```
-In case you would like to perform an exact phrase search (logical AND), you can do so by specifying double quotes in the search text.
+If you want to search for exact phrase like documents that have 'modern design patterns' together, you can do so by specifying double quotes in the search text.
  
 **Example**
 ```
@@ -146,5 +146,28 @@ In case you would like to perform an exact phrase search (logical AND), you can 
     "subtitle" : "A JavaScript and jQuery Developer's Guide",
     "description" : "With Learning JavaScript Design Patterns, you'll learn how to write beautiful, structured, and maintainable JavaScript by applying classical and modern design patterns to the language. If you want to keep your code efficient, more manageable, and up-to-date with the latest best practices, this book is for you."
 }
->
+
+```
+#### Negations
+If you want to exclude the documents that contains a perticualar word than you can use negation serach. For example if you want to search all documents that have the 'JavaScript' but not 'HTML5' or 'ECMAScript', you can do search like below example.
+
+**Example**
+```
+>db.books.find({$text: {$search: "JavaScript -HTML5 -ECMAScript"}},{ subtitle: 1, description: 1 })
+	{
+    "_id" : ObjectId("602b098f3cb6144ada1c2ea1"),
+    "subtitle" : "A JavaScript and jQuery Developer's Guide",
+    "description" : "With Learning JavaScript Design Patterns, you'll learn how to write beautiful, structured, and maintainable JavaScript by applying classical and modern design patterns to the language. If you want to keep your code efficient, more manageable, and up-to-date with the latest best practices, this book is for you."
+	},
+	{
+    "_id" : ObjectId("602b09a83cb6144ada1c4973"),
+    "subtitle" : "An In-Depth Guide for Programmers",
+    "description" : "Like it or not, JavaScript is everywhere these days-from browser to server to mobile-and now you, too, need to learn the language or dive deeper than you have. This concise book guides you into and through JavaScript, written by a veteran programmer who once found himself in the same position."
+	},
+	{
+    "_id" : ObjectId("602b095c3cb6144ada1c1028"),
+    "subtitle" : "A Modern Introduction to Programming",
+    "description" : "JavaScript lies at the heart of almost every modern web application, from social apps to the newest browser-based games. Though simple for beginners to pick up and play with, JavaScript is a flexible, complex language that you can use to build full-scale applications."
+	}
+
 ```
